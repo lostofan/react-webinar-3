@@ -3,7 +3,8 @@
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
+    // Задача №2: Добавляю в стейт поле с счетчиком ид
+    this.state = { ...initState, idCounter: initState.list.length || 0 };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -16,8 +17,8 @@ class Store {
     this.listeners.push(listener);
     // Возвращается функция для удаления добавленного слушателя
     return () => {
-      this.listeners = this.listeners.filter(item => item !== listener);
-    }
+      this.listeners = this.listeners.filter((item) => item !== listener);
+    };
   }
 
   /**
@@ -42,11 +43,18 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
+    // Задача №2: Инкрементирую ид для уникальности
+    this.state.idCounter += 1;
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
-    })
-  };
+      list: [
+        ...this.state.list,
+        // Задача №2: Теперь в поле code отображается уникальный id
+        // Задача №3: Добавил в стейт каунтер
+        { code: this.state.idCounter, title: 'Новая запись', selectCounter: 0 },
+      ],
+    });
+  }
 
   /**
    * Удаление записи по коду
@@ -55,9 +63,9 @@ class Store {
   deleteItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
+      list: this.state.list.filter((item) => item.code !== code),
+    });
+  }
 
   /**
    * Выделение записи по коду
@@ -66,13 +74,18 @@ class Store {
   selectItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
+      list: this.state.list.map((item) => {
         if (item.code === code) {
+          // Задача №3: Каунтер  увеличивается только при выделении, при снятии не работает
+          !item.selected ? (item.selectCounter += 1) : false;
           item.selected = !item.selected;
+        } else {
+          // Задача №1: Селект только одной записи
+          item.selected = false;
         }
         return item;
-      })
-    })
+      }),
+    });
   }
 }
 
