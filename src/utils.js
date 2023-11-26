@@ -26,3 +26,14 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+export const counterGenerator = (count) => {
+  let phrase = '';
+  if (count === 2 || count === 3 || count === 4) {
+    phrase = `раза`;
+  } else {
+    phrase = 'раз';
+  }
+
+  return 'Выделяли: ' + count + ' ' + phrase;
+};
