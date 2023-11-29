@@ -1,39 +1,44 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "./style.css";
 import Button from "../button";
 import { cn as bem } from "@bem-react/classname";
-function Item({ item, onAddToBasket }) {
+import "./style.css";
+
+function BasketListItem({ item, onRemoveFromBasket }) {
   const cn = bem("Item");
   const callbacks = {
-    onAddToBasket: () => {
-      onAddToBasket(item);
+    onRemoveFromBasket: () => {
+      onRemoveFromBasket(item);
     },
   };
 
   return (
-    <div className={cn()}>
+    <div className={cn()} onClick={callbacks.onClick}>
       <div className={cn("code")}>{item.code}</div>
       <div className={cn("title")}>{item.title}</div>
       <div className={cn("price")}>{item.price + " руб"}</div>
+      <div className={cn("amount")}>{item.amount + " шт"}</div>
       <div className={cn("actions")}>
-        <Button click={callbacks.onAddToBasket}>Добавить</Button>
+        <Button click={() => callbacks.onRemoveFromBasket(item)}>
+          Удалить
+        </Button>
       </div>
     </div>
   );
 }
 
-Item.propTypes = {
+BasketListItem.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
+    amount: PropTypes.number,
   }).isRequired,
-  onAddToBasket: PropTypes.func.isRequired,
+  onRemoveFromBasket: PropTypes.func,
 };
 
-Item.defaultProps = {
+BasketListItem.defaultProps = {
   onAddToBasket: () => {},
 };
 
-export default React.memo(Item);
+export default React.memo(BasketListItem);
