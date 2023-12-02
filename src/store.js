@@ -46,25 +46,23 @@ class Store {
    * Добавление товара в корзину
    * @param code
    */
-  addToBasket(listItem) {
-    //Получаем объект товара, если он уже есть в корзине
-    const existingItem = this.state.basket.products.find(
-      (item) => item.code === listItem.code
-    );
+  addToBasket(code) {
+    //Получаем код товара, если он уже есть в корзине
+    const currentProduct = this.state.list.find((item) => item.code === code);
+    const basketAmount = this.state.basket.products.find(
+      (item) => item.code === code
+    )?.amount;
     //Обновление стора, если добавляемый товар уже есть в корзине
-    if (existingItem) {
+    if (basketAmount) {
       this.setState({
         ...this.state,
         basket: {
           ...this.state.basket,
           products: [
-            ...this.state.basket.products.filter(
-              (item) => item.code !== listItem.code
-            ),
-            { ...existingItem, amount: existingItem.amount + 1 },
+            ...this.state.basket.products.filter((item) => item.code !== code),
+            { ...currentProduct, amount: basketAmount + 1 },
           ],
-
-          totalPrice: this.state.basket.totalPrice + listItem.price,
+          totalPrice: this.state.basket.totalPrice + currentProduct.price,
         },
       });
     } else {
@@ -73,9 +71,12 @@ class Store {
         ...this.state,
         basket: {
           ...this.state.basket,
-          products: [...this.state.basket.products, { ...listItem, amount: 1 }],
+          products: [
+            ...this.state.basket.products,
+            { ...currentProduct, amount: 1 },
+          ],
           amount: this.state.basket.amount + 1,
-          totalPrice: this.state.basket.totalPrice + listItem.price,
+          totalPrice: this.state.basket.totalPrice + currentProduct.price,
         },
       });
     }
@@ -84,18 +85,22 @@ class Store {
    * Удаление группы товаров из корзины
    * @param code
    */
-  removeFromBasket(listItem) {
+  removeFromBasket(code) {
+    //Получаем объект продукта в корзине
+    const currentProduct = this.state.basket.products.find(
+      (item) => item.code === code
+    );
     //Получаем сумму цен всех товаров
-    const fullPrice = listItem.amount * listItem.price;
+    const fullPrice = currentProduct.amount * currentProduct.price;
     const rest = this.state.basket.products.filter(
-      (item) => item.code !== listItem.code
+      (item) => item.code !== code
     );
     this.setState({
       ...this.state,
       basket: {
         ...this.state.basket,
         products: [...rest],
-        amount: this.state.basket.products.length - 1,
+        amount: rest.length,
         totalPrice: this.state.basket.totalPrice - fullPrice,
       },
     });

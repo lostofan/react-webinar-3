@@ -18,14 +18,14 @@ function App({ store }) {
       return <Item item={item} onAddToBasket={callbacks.onAddToBasket} />;
     }, []),
     onAddToBasket: useCallback(
-      (listItem) => {
-        store.addToBasket(listItem);
+      (code) => {
+        store.addToBasket(code);
       },
       [store]
     ),
     onRemoveFromBasket: useCallback(
-      (listItem) => {
-        store.removeFromBasket(listItem);
+      (code) => {
+        store.removeFromBasket(code);
       },
       [store]
     ),

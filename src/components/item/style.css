@@ -17,9 +17,14 @@
   margin-left: auto;
   display: flex;
   justify-content: flex-end;
-  padding: 20px 20px 20px 10px;
+  padding: 20px 0;
+  margin-right: 21px;
 }
 .Item-price, .Item-amount {
   white-space: nowrap;
   margin-left: auto;
-  padding: 20px 10px;}
+  padding: 20px 0;
+}
+.Item-price {
+  margin-right: 24px;
+}

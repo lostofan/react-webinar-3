@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
+import { formatPrice } from "../../utils";
 import "./style.css";
 function BasketCalc({ totalPrice, amount }) {
   const cn = bem("BasketCalc");
@@ -9,7 +10,7 @@ function BasketCalc({ totalPrice, amount }) {
       {amount ? (
         <div className={cn()}>
           <strong className={cn("text")}>Итого </strong>
-          <strong className={cn("text")}>{totalPrice + " руб."}</strong>
+          <strong className={cn("text")}>{formatPrice(totalPrice)}</strong>
         </div>
       ) : (
         <></>

@@ -1,25 +1,34 @@
-.Item {
+.BasketItem {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     transition: background-color 1s;
   }
   
-  .Item-code {
+  .BasketItem-code {
     padding: 20px 10px 20px 20px;
   }
   
-  .Item-title {
+  .BasketItem-title {
     width: 100%;
     padding: 20px 10px;
   }
   
-  .Item-actions {
+  .BasketItem-actions {
     margin-left: auto;
     display: flex;
     justify-content: flex-end;
-    padding: 20px 20px 20px 10px;
+    padding: 20px 0;
+    margin-right: 21px;
+   
   }
-  .Item-price, .Item-amount {
+  .BasketItem-price, .BasketItem-amount {
     white-space: nowrap;
-    margin-left: auto;
-    padding: 20px 10px;}
+    padding: 20px 0;
+    margin-right: 24px;
+  }
+  
+  .BasketItem-price {
+    margin-right: 62px;
+  }
+

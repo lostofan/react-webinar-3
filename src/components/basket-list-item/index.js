@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import Button from "../button";
 import { cn as bem } from "@bem-react/classname";
 import "./style.css";
+import { formatPrice } from "../../utils";
 
 function BasketListItem({ item, onRemoveFromBasket }) {
-  const cn = bem("Item");
+  const cn = bem("BasketItem");
   const callbacks = {
-    onRemoveFromBasket: () => {
-      onRemoveFromBasket(item);
+    handleRemoveFromBasket: () => {
+      onRemoveFromBasket(item.code);
     },
   };
 
@@ -16,12 +17,10 @@ function BasketListItem({ item, onRemoveFromBasket }) {
     <div className={cn()} onClick={callbacks.onClick}>
       <div className={cn("code")}>{item.code}</div>
       <div className={cn("title")}>{item.title}</div>
-      <div className={cn("price")}>{item.price + " руб"}</div>
+      <div className={cn("price")}>{formatPrice(item.price)}</div>
       <div className={cn("amount")}>{item.amount + " шт"}</div>
       <div className={cn("actions")}>
-        <Button click={() => callbacks.onRemoveFromBasket(item)}>
-          Удалить
-        </Button>
+        <Button click={callbacks.handleRemoveFromBasket}>Удалить</Button>
       </div>
     </div>
   );

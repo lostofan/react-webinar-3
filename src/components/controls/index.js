@@ -7,11 +7,20 @@ import BasketModal from "../basketModal";
 import BasketCalc from "../basket-calc";
 import { cn as bem } from "@bem-react/classname";
 import "./style.css";
+import { plural, formatPrice } from "../../utils";
 
 function Controls({ basket, onRemoveFromBasket }) {
   const cn = bem("Controls");
   const basketStatus = basket.amount
-    ? basket.amount + " товара" + " / " + basket.totalPrice + " руб"
+    ? basket.amount +
+      " " +
+      plural(basket.amount, {
+        one: "товар",
+        few: "товара",
+        many: "товаров",
+      }) +
+      " / " +
+      formatPrice(basket.totalPrice)
     : " Пусто";
   const [showModal, setShowModal] = useState(false);
 
